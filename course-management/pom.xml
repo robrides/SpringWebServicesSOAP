@@ -76,7 +76,7 @@
             <configuration>
                 <schemaDirectory>${project.basedir}/src/main/resources</schemaDirectory>
                 <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-                <clearOuptputDir>false</clearOuptputDir>
+                <clearOutputDir>false</clearOutputDir>
             </configuration>
         </plugin>
 		</plugins>
