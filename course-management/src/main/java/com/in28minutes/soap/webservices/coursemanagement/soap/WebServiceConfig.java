@@ -37,8 +37,8 @@ public class WebServiceConfig {
 	@Bean
 	public XsdSchema coursesSchema() {
 		return new SimpleXsdSchema(new ClassPathResource("course-details.xsd"));
-			
-		
 	}
+
+	
 	
 }
