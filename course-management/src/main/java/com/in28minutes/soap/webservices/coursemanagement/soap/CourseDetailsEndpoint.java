@@ -1,4 +1,5 @@
 package com.in28minutes.soap.webservices.coursemanagement.soap;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.in28minutes.courses.GetCourseDetailsRequest;
 import com.in28minutes.courses.GetCourseDetailsResponse;
 import com.in28minutes.soap.webservices.coursemanagement.soap.bean.Course;
 import com.in28minutes.soap.webservices.coursemanagement.soap.service.CourseDetailsService;
+import com.in28minutes.soap.webservices.coursemanagement.soap.service.CourseDetailsService.Status;
 
 @Endpoint
 public class CourseDetailsEndpoint {
@@ -35,20 +37,20 @@ public class CourseDetailsEndpoint {
 	@PayloadRoot(namespace = "http://in28minutes.com/courses", localPart = "DeleteCourseDetailsRequest")
 	@ResponsePayload
 	public DeleteCourseDetailsResponse deleteCourseDetailsRequest(@RequestPayload DeleteCourseDetailsRequest request) {
+
+		Status status = service.deleteById(request.getId());
+
 		DeleteCourseDetailsResponse response = new DeleteCourseDetailsResponse();
-		
-		try {
-			
-			service.deleteById(request.getId());
-			response.setStatus("Success");
-			return response;
-			
+		response.setStatus(mapStatus(status));
+		return response;
+
+	}
+
+	private com.in28minutes.courses.Status mapStatus(Status status) {
+		if(status==Status.FAILURE) {
+			return com.in28minutes.courses.Status.FAILURE;
 		}
-		catch (Exception e) {
-			response.setStatus("Failed");
-			return response;
-		}
-		
+		return com.in28minutes.courses.Status.SUCCESS;
 	}
 
 	private GetCourseDetailsResponse mapCourseDetails(Course course) {
